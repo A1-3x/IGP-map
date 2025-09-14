@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Islamic Geometric Patterns Map</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google Fonts for elegant typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Islamic Geometric Patterns</h1>
+            <p class="subtitle">A Journey Through Sacred Geometry Across the World</p>
+            <div class="contact-info">
+                <small>Contact: <a href="mailto:mathartplay@gmail.com">mathartplay@gmail.com</a></small>
+            </div>
+            <div class="map-attribution">
+                <small>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</small>
+            </div>
+        </header>
+        
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+        
+        <div class="info-panel" id="infoPanel">
+            <div class="info-content">
+                <button class="close-btn" id="closeBtn">&times;</button>
+                <div class="pattern-content">
+                    <div class="pattern-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="label">Location:</span>
+                                <span id="patternLocation"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Symmetry Group:</span>
+                                <span id="patternSymmetry"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Century:</span>
+                                <span id="patternCentury"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Notes:</span>
+                                <span id="patternNotes"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pattern-image-container">
+                        <img id="patternImage" src="" alt="Islamic Geometric Pattern">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
