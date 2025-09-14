@@ -37,6 +37,33 @@ const patternData = [
         symmetryGroup: "pmm",
         century: "18",
         notes: ""
+    },
+    {
+        location: "Salim Chishti's Tomb, Fatehpur Sikri, India",
+        latitude: 27.09530275,
+        longitude: 77.66276663,
+        fileName: "05_PG351.png",
+        symmetryGroup: "p6",
+        century: "16",
+        notes: "Also in Itmad ud Daula, Agra"
+    },
+    {
+        location: "Itmad ud Daula, Agra, India",
+        latitude: 27.1930543,
+        longitude: 78.03110955,
+        fileName: "05_PG351.png",
+        symmetryGroup: "p6",
+        century: "17",
+        notes: "Also in Salim Chishti's Tomb, Fatehpur Sikri"
+    },
+    {
+        location: "Mexuar Patio Corridor, Alhambra, Granada, Spain",
+        latitude: 37.176245,
+        longitude: -3.588076927,
+        fileName: "06_P051.png",
+        symmetryGroup: "p4m",
+        century: "",
+        notes: "No colour in the original. Has a left-hand and right-hand versions"
     }
 ];
 

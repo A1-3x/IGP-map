@@ -62,7 +62,7 @@ body::before {
 .title::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
     width: 100px;
@@ -76,48 +76,10 @@ body::before {
     color: #e8e8e8;
     font-style: italic;
     opacity: 0.9;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
 
-.contact-info {
-    margin-top: 0.5rem;
-}
-
-.contact-info small {
-    color: #b8b8b8;
-    font-size: 0.85rem;
-}
-
-.contact-info a {
-    color: #ffd700;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.contact-info a:hover {
-    color: #ffed4e;
-    text-decoration: underline;
-}
-
-.map-attribution {
-    margin-top: 0.3rem;
-}
-
-.map-attribution small {
-    color: #a0a0a0;
-    font-size: 0.8rem;
-}
-
-.map-attribution a {
-    color: #4A90E2;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.map-attribution a:hover {
-    color: #6BA3F5;
-    text-decoration: underline;
-}
 
 /* Map Container */
 .map-container {
