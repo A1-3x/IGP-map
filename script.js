@@ -1,80 +1,97 @@
 // Islamic Geometric Patterns Map - JavaScript
 
-// Map data from CSV
-const patternData = [
-    {
-        location: "The Great Mosque, Tlemcen, Algeria",
-        latitude: 34.88390002,
-        longitude: -1.310460442,
-        fileName: "01_H327.png",
-        symmetryGroup: "p6m",
-        century: "13",
-        notes: ""
-    },
-    {
-        location: "Tile from Copenhagen",
-        latitude: 55.6761,
-        longitude: 12.5683,
-        fileName: "02_na.PNG",
-        symmetryGroup: "p4m",
-        century: "",
-        notes: "Attribution unknown. Also a modern roundel with the same design"
-    },
-    {
-        location: "Fatehpur Sikri, India",
-        latitude: 27.09565487,
-        longitude: 77.66306994,
-        fileName: "03_P85.png",
-        symmetryGroup: "p3m1",
-        century: "16",
-        notes: "Carved stone panel dated 1565-1605; Jali screen on the balcony."
-    },
-    {
-        location: "Golestan Palace, Tehran",
-        latitude: 35.67986124,
-        longitude: 51.42048591,
-        fileName: "04_P30.png",
-        symmetryGroup: "pmm",
-        century: "18",
-        notes: ""
-    },
-    {
-        location: "Salim Chishti's Tomb, Fatehpur Sikri, India",
-        latitude: 27.09530275,
-        longitude: 77.66276663,
-        fileName: "05_PG351.png",
-        symmetryGroup: "p6",
-        century: "16",
-        notes: "Also in Itmad ud Daula, Agra"
-    },
-    {
-        location: "Itmad ud Daula, Agra, India",
-        latitude: 27.1930543,
-        longitude: 78.03110955,
-        fileName: "05_PG351.png",
-        symmetryGroup: "p6",
-        century: "17",
-        notes: "Also in Salim Chishti's Tomb, Fatehpur Sikri"
-    },
-    {
-        location: "Mexuar Patio Corridor, Alhambra, Granada, Spain",
-        latitude: 37.176245,
-        longitude: -3.588076927,
-        fileName: "06_P051.png",
-        symmetryGroup: "p4m",
-        century: "",
-        notes: "No colour in the original. Has a left-hand and right-hand versions"
-    }
-];
-
 // Global variables
 let map;
 let currentMarker = null;
 let infoPanel;
 let closeBtn;
+let patternData = [];
+
+// CSV data - will be loaded dynamically
+const csvData = `Location,Latitude,Longitude,FileName,SymmetryGroup,Century,Notes,Tiling Search Link
+"The Great Mosque, Tlemcen, Algeria",34.88390002,-1.310460442,01_H327.png,p6m,13,,
+Tile from Copenhagen,55.6761,12.5683,02_na.PNG,p4m,,Attribution unkown. Also a modern roundel with the same design,
+"Fatehpur Sikri, India",27.09565487,77.66306994,03_P85.png,p3m1,16,Carved stone panel dated 1565-1605; Jali screen on the balcony.,
+"Golestan Palace, Tehran",35.67986124,51.42048591,04_P30.png,pmm,18,,
+"Salim Chishti's Tomb, Fatehpur Sikri, India",27.09530275,77.66276663,05_PG351.png,p6,16,"Also in Itmad ud Daula, Agra",
+"Itmad ud Daula, Agra, India",27.1930543,78.03110955,05_PG351.png,p6,17,"Also in Salim Chishti's Tomb, Fatehpur Sikri",
+"Mexuar Patio Corridor, Alhambra, Granada, Spain",37.176245,-3.588076927,06_P051.png,p4m,,No colour in the original. Has a left-hand and right-hand versions,
+"Patio de los Arrauanes, Alhambra, Granada, Spain",37.17741684,-3.589753888,07_P052A.png,p3,14,,https://tilingsearch.mit.edu/HTML/data159/P052A.html
+"Itmad ud Daula, Agra, India",27.19261053,78.0303478,08_IND0428.png,p2,17,,https://tilingsearch.mit.edu/HTML/data189/IND0428.html
+Topkapı scroll,38.0837822,46.28966583,09_na.PNG,pm,15,,
+"Friday Mosque, Yazd",31.90166085,54.36844785,10_IB2.png,p4g,14,,https://tilingsearch.mit.edu/HTML/data207/IB2.html
+"Mudhafaria Minaret, Irbil, Iraq",36.1877659,43.99964228,10_IB2.png,p4g,12,,https://tilingsearch.mit.edu/HTML/data207/IB2.html`;
+
+// Function to parse CSV data
+function parseCSV(csvText) {
+    const lines = csvText.trim().split('\n');
+    const headers = lines[0].split(',').map(header => header.replace(/"/g, '').trim());
+    const data = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '') continue; // Skip empty lines
+        
+        const values = parseCSVLine(lines[i]);
+        if (values.length >= headers.length) {
+            const pattern = {};
+            headers.forEach((header, index) => {
+                let value = values[index] || '';
+                // Remove quotes and trim
+                value = value.replace(/^"|"$/g, '').trim();
+                
+                // Convert numeric fields
+                if (header === 'Latitude' || header === 'Longitude') {
+                    value = parseFloat(value) || 0;
+                }
+                
+                // Convert field names to camelCase for consistency
+                let fieldName = header.toLowerCase()
+                    .replace(/\s+/g, '')
+                    .replace(/tilingsearchlink/g, 'tilingSearchLink');
+                
+                // Fix specific field names
+                if (fieldName === 'filename') fieldName = 'fileName';
+                if (fieldName === 'symmetrygroup') fieldName = 'symmetryGroup';
+                
+                pattern[fieldName] = value;
+            });
+            data.push(pattern);
+        }
+    }
+    
+    return data;
+}
+
+// Function to parse CSV line handling quoted fields
+function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+    
+    for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        
+        if (char === '"') {
+            inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+            result.push(current);
+            current = '';
+        } else {
+            current += char;
+        }
+    }
+    
+    result.push(current);
+    return result;
+}
 
 // Initialize the map when the page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Parse CSV data first
+    patternData = parseCSV(csvData);
+    console.log('Loaded patterns:', patternData.length);
+    console.log('First pattern:', patternData[0]);
+    
     initializeMap();
     initializeInfoPanel();
 });
@@ -180,10 +197,28 @@ function updatePanelContent(pattern) {
     // Update century
     document.getElementById('patternCentury').textContent = pattern.century ? `${pattern.century}th century` : 'Not specified';
     
-    // Hide notes section
+    // Update notes
     const notesElement = document.getElementById('patternNotes');
     if (notesElement) {
-        notesElement.parentElement.style.display = 'none';
+        if (pattern.notes && pattern.notes.trim() !== '') {
+            notesElement.textContent = pattern.notes;
+            notesElement.parentElement.style.display = 'block';
+        } else {
+            notesElement.parentElement.style.display = 'none';
+        }
+    }
+    
+    // Add tiling search link if available
+    const tilingLinkElement = document.getElementById('tilingSearchLink');
+    const tilingSearchItem = document.getElementById('tilingSearchItem');
+    if (tilingLinkElement && tilingSearchItem) {
+        if (pattern.tilingSearchLink && pattern.tilingSearchLink.trim() !== '') {
+            tilingLinkElement.href = pattern.tilingSearchLink;
+            tilingLinkElement.textContent = 'View on Tiling Search';
+            tilingSearchItem.style.display = 'block';
+        } else {
+            tilingSearchItem.style.display = 'none';
+        }
     }
     
     // Add loading state for image
