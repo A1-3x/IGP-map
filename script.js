@@ -20,7 +20,13 @@ Tile from Copenhagen,55.6761,12.5683,02_na.PNG,p4m,,Attribution unkown. Also a m
 "Itmad ud Daula, Agra, India",27.19261053,78.0303478,08_IND0428.png,p2,17,,https://tilingsearch.mit.edu/HTML/data189/IND0428.html
 Topkapı scroll,38.0837822,46.28966583,09_na.PNG,pm,15,,
 "Friday Mosque, Yazd",31.90166085,54.36844785,10_IB2.png,p4g,14,,https://tilingsearch.mit.edu/HTML/data207/IB2.html
-"Mudhafaria Minaret, Irbil, Iraq",36.1877659,43.99964228,10_IB2.png,p4g,12,,https://tilingsearch.mit.edu/HTML/data207/IB2.html`;
+"Mudhafaria Minaret, Irbil, Iraq",36.1877659,43.99964228,10_IB2.png,p4g,12,,https://tilingsearch.mit.edu/HTML/data207/IB2.html
+"Mosque of Rustem Pasha, Istanbul, Turkey",41.01777553,28.96871961,11_A376.png,p31m,16,,https://tilingsearch.mit.edu/HTML/data15/A376.html
+"Isfahan, Iran",32.66257793,51.66299351,12_P175.png,cmm,11,,https://tilingsearch.mit.edu/HTML/data12/P175.html
+"Mahan - The Shrine of Sheikh Nematullah Vali, Iran",30.06066774,57.28947471,12_P175.png,cmm,15,,https://tilingsearch.mit.edu/HTML/data12/P175.html
+"Lab-i-Hauz complex, Bukhara, Uzbekistan",39.77342685,64.4203621,12_P175.png,cmm,16,,https://tilingsearch.mit.edu/HTML/data12/P175.html
+"Qalawun, Cairo, Egypt",30.04980545,31.26102204,13_M2.png,pmg,13,,https://tilingsearch.mit.edu/HTML/data19/M2.html
+"Mosque of Muhammad Ali, Cairo, Egypt",30.03459541,31.25937622,13_M2.png,pmg,19,,https://tilingsearch.mit.edu/HTML/data19/M2.html`;
 
 // Function to parse CSV data
 function parseCSV(csvText) {
